@@ -1,56 +1,79 @@
-from ..utils.handle_errors import handle_error_pagarme
-from ..serializers.orders import OrdersSerializer
-from .config import Config
+from classes.config import Config
+from utils.handle_errors import handle_error_pagarme
+from schemas.orders import OrderSchema
+from abc import abstractmethod
+from jsonschema import validate
 
 import requests
 import json
 
 
-class Order(Config):
+class Order(OrderSchema):
+    def __init__(self, id, customer_id, items, charges, payments) -> None:
+        if id:
+            self.id = id
+        if customer_id:
+            self.customer_id = customer_id
+        self.items = items
+        if payments:
+            self.payments = payments
+        if charges:
+            self.charges = charges
+
+    @abstractmethod
+    def mount_obj(content: dict):
+        return Order(
+            id=content.get("id"),
+            customer_id=content.get("customer_id"),
+            items=content.get("items"),
+            payments=content.get("payments"),
+            charges=content.get("charges"),
+        ).__dict__
+
     @classmethod
     def get_orders(cls):
-        url = Config.__url + "/orders"
+        response = []
+        url = Config.get_url() + "/orders"
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.auth,
-                headers=Config.__header,
+                auth=Config.get_auth(),
+                headers=Config.get_header(),
             ).text
         )
-        serializer = OrdersSerializer(data=content.get("data"), many=True)
-        if not serializer.is_valid():
-            return handle_error_pagarme(content)
-        return serializer.data
+        content_validated = handle_error_pagarme(content)
+        contents = content_validated.get("data")
+        validate(instance=contents, schema=cls.validate_list())
+        [response.append(Order.mount_obj(content)) for content in contents]
+        return response
 
     @classmethod
     def get_order(cls, pk):
-        url = Config.__url + f"/orders/{pk}"
+        url = Config.get_url() + f"/orders/{pk}"
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.auth,
-                headers=Config.__header,
+                auth=Config.get_auth(),
+                headers=Config.get_header(),
             ).text
         )
-        serializer = OrdersSerializer(data=content)
-        if not serializer.is_valid():
-            return handle_error_pagarme(content)
-        return serializer.data
+        content_validated = handle_error_pagarme(content)
+        validate(instance=content_validated, schema=cls.validate_get())
+        return Order.mount_obj(content_validated)
 
     @classmethod
     def insert_order(cls, payload):
-        url = Config.__url + "/orders/"
-        header = Config.__header
+        url = Config.get_url() + "/orders/"
+        header = Config.get_header()
         header["Content-Type"] = "application/json"
         content = json.loads(
             requests.post(
                 url,
-                auth=Config.auth,
+                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text
         )
-        serializer = OrdersSerializer(data=content)
-        if not serializer.is_valid():
-            return handle_error_pagarme(content)
-        return serializer.data
+        content_validated = handle_error_pagarme(content)
+        validate(instance=content_validated, schema=cls.validate_get())
+        return Order.mount_obj(content_validated)

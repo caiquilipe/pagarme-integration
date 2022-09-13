@@ -1,7 +1,12 @@
+from jsonschema.exceptions import ValidationError
+
+
 def handle_error_pagarme(content: dict) -> dict:
     if content.get("errors"):
-        return {"detail": sum(content.get("errors").values(), [])}
-    return {"detail": content.get("message")}
+        raise ValidationError(message=sum(content.get("errors").values(), [])[0])
+    elif content.get("message"):
+        raise ValidationError(message=content.get("message"))
+    return content
 
 
 def handle_error_serializer(errors: dict) -> dict:

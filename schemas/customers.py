@@ -1,6 +1,3 @@
-from abc import abstractmethod
-
-
 class CustomerSchema:
     __insert = {
         "type": "object",
@@ -15,29 +12,19 @@ class CustomerSchema:
             "name": {"type": "string"},
             "email": {"type": "string"},
         },
-        "required": ["id", "name", "email"],
+        "required": ["id", "name"],
     }
 
-    __list = {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "name": {"type": "string"},
-                "email": {"type": "string"},
-            },
-        },
-    }
+    __list = {"type": "array", "items": __get}
 
     @classmethod
-    def insert(cls):
+    def validate_insert(cls):
         return cls.__insert
 
     @classmethod
-    def get(cls):
+    def validate_get(cls):
         return cls.__get
 
     @classmethod
-    def list(cls):
+    def validate_list(cls):
         return cls.__list

@@ -1,11 +1,12 @@
-from schemas.customers import CustomerSchema
+from jsonschema.exceptions import ValidationError, SchemaError
+from jsonschema import validate
+
 from classes.customers import Customer
 from classes.config import Config
+from classes.orders import Order
+from classes.cards import Card
 
 from abc import abstractmethod
-
-from jsonschema import validate
-from jsonschema.exceptions import ValidationError, SchemaError
 
 
 class PaymentGatewayClass:
@@ -23,13 +24,13 @@ class PaymentGatewayClass:
     @abstractmethod
     def insert_customer(payload):
         try:
-            validate(instance=payload, schema=CustomerSchema.insert)
-            return Customer.insert_customer(payload=payload)
+            validate(instance=payload, schema=Customer.validate_insert())
+            return Customer.insert_customer(payload=Customer.mount_obj(content=payload))
         except ValidationError as ve:
             raise ve
         except SchemaError as se:
             raise se
-        """
+
     @abstractmethod
     def get_cards(customer_id):
         return Card.get_cards(customer_id=customer_id)
@@ -41,10 +42,10 @@ class PaymentGatewayClass:
     @abstractmethod
     def insert_card(customer_id, payload):
         try:
-            serializer = CardsInsertSerializer(data=payload)
-            if not serializer.is_valid():
-                raise ValidationError(detail=handle_error_serializer(serializer.errors))
-            return Card.insert_card(customer_id=customer_id, payload=serializer.data)
+            validate(instance=payload, schema=Card.validate_insert())
+            return Card.insert_card(
+                customer_id=customer_id, payload=Card.mount_obj(content=payload)
+            )
         except ValidationError as ve:
             raise ve
 
@@ -59,10 +60,7 @@ class PaymentGatewayClass:
     @abstractmethod
     def insert_order(payload):
         try:
-            serializer = OrdersInserirSerializer(data=payload)
-            if not serializer.is_valid():
-                raise ValidationError(detail=handle_error_serializer(serializer.errors))
-            return Order.insert_order(payload=serializer.data)
+            validate(instance=payload, schema=Order.insert_order())
+            return Order.insert_order(payload=Order.mount_obj(content=payload))
         except ValidationError as ve:
             raise ve
-        """
