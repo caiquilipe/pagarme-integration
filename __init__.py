@@ -1,4 +1,4 @@
 import payment_gateway
-import serializers
+import schemas
 import classes
 import utils
