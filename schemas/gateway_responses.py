@@ -1,4 +1,4 @@
-from schemas.errors import ErrorSchema
+from pagarme_integration.schemas.errors import ErrorSchema
 
 
 class GatewayResponseSchema:

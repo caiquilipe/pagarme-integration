@@ -1,10 +1,10 @@
+from pagarme_integration.classes.customers import Customer
+from pagarme_integration.classes.config import Config
+from pagarme_integration.classes.orders import Order
+from pagarme_integration.classes.cards import Card
+
 from jsonschema.exceptions import ValidationError, SchemaError
 from jsonschema import validate
-
-from classes.customers import Customer
-from classes.config import Config
-from classes.orders import Order
-from classes.cards import Card
 
 from abc import abstractmethod
 

@@ -1,4 +1,1 @@
-import payment_gateway
-import schemas
-import classes
-import utils
+from .payment_gateway import PaymentGatewayClass

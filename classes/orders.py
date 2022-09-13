@@ -1,8 +1,10 @@
-from classes.config import Config
-from utils.handle_errors import handle_error_pagarme
-from schemas.orders import OrderSchema
-from abc import abstractmethod
+from pagarme_integration.utils.handle_errors import handle_error_pagarme
+from pagarme_integration.schemas.orders import OrderSchema
+from pagarme_integration.classes.config import Config
+
 from jsonschema import validate
+
+from abc import abstractmethod
 
 import requests
 import json

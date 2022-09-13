@@ -1,6 +1,7 @@
-from utils.handle_errors import handle_error_pagarme
-from schemas.cards import CardSchema
-from .config import Config
+from pagarme_integration.utils.handle_errors import handle_error_pagarme
+from pagarme_integration.schemas.cards import CardSchema
+from pagarme_integration.classes.config import Config
+
 from jsonschema import validate
 
 from abc import abstractmethod

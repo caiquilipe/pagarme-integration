@@ -1,6 +1,6 @@
-from schemas.payments import PaymentSchema
-from schemas.charges import ChargeSchema
-from schemas.items import ItemSchema
+from pagarme_integration.schemas.payments import PaymentSchema
+from pagarme_integration.schemas.charges import ChargeSchema
+from pagarme_integration.schemas.items import ItemSchema
 
 
 class OrderSchema:
