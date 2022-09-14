@@ -5,7 +5,7 @@ class CardSchema:
             "number": {"type": "string"},
             "holder_name": {"type": "string"},
             "exp_month": {"type": "number"},
-            "exp_year": {"type": "exp_year"},
+            "exp_year": {"type": "number"},
             "cvv": {"type": "string"},
         },
         "required": ["number", "holder_name", "exp_month", "exp_year", "cvv"],
