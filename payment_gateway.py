@@ -6,23 +6,18 @@ from pagarme_integration.classes.cards import Card
 from jsonschema.exceptions import ValidationError, SchemaError
 from jsonschema import validate
 
-from abc import abstractmethod
-
 
 class PaymentGatewayClass:
     def __init__(self, key) -> None:
         Config.set_auth(key=key)
 
-    @abstractmethod
-    def get_customers():
+    def get_customers(self):
         return Customer.get_customers()
 
-    @abstractmethod
-    def get_customer(pk):
+    def get_customer(self, pk):
         return Customer.get_customer(pk=pk)
 
-    @abstractmethod
-    def insert_customer(payload):
+    def insert_customer(self, payload):
         try:
             validate(instance=payload, schema=Customer.validate_insert())
             return Customer.insert_customer(payload=Customer.mount_obj(content=payload))
@@ -31,16 +26,13 @@ class PaymentGatewayClass:
         except SchemaError as se:
             raise se
 
-    @abstractmethod
-    def get_cards(customer_id):
+    def get_cards(self, customer_id):
         return Card.get_cards(customer_id=customer_id)
 
-    @abstractmethod
-    def get_card(customer_id, pk):
+    def get_card(self, customer_id, pk):
         return Card.get_card(customer_id=customer_id, pk=pk)
 
-    @abstractmethod
-    def insert_card(customer_id, payload):
+    def insert_card(self, customer_id, payload):
         try:
             validate(instance=payload, schema=Card.validate_insert())
             return Card.insert_card(
@@ -49,16 +41,13 @@ class PaymentGatewayClass:
         except ValidationError as ve:
             raise ve
 
-    @abstractmethod
-    def get_orders():
+    def get_orders(self):
         return Order.get_orders()
 
-    @abstractmethod
-    def get_order(pk):
+    def get_order(self, pk):
         return Order.get_order(pk=pk)
 
-    @abstractmethod
-    def insert_order(payload):
+    def insert_order(self, payload):
         try:
             validate(instance=payload, schema=Order.insert_order())
             return Order.insert_order(payload=Order.mount_obj(content=payload))
