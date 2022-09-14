@@ -1,4 +1,4 @@
-from ..schemas.cards import CardSchema
+from pagarme_integration.schemas.cards import CardSchema
 
 
 class PaymentSchema:

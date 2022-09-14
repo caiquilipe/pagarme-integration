@@ -1,6 +1,6 @@
-from ..utils.handle_errors import handle_error_pagarme
-from ..schemas.customers import CustomerSchema
-from ..classes.config import Config
+from pagarme_integration..utils.handle_errors import handle_error_pagarme
+from pagarme_integration..schemas.customers import CustomerSchema
+from pagarme_integration..classes.config import Config
 
 from jsonschema import validate
 
