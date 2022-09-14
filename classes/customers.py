@@ -11,12 +11,18 @@ import json
 
 
 class Customer(CustomerSchema):
-    def __init__(self, id, name, email) -> None:
+    def __init__(self, id, name, email, document, document_type, type) -> None:
         if id:
             self.id = id
         self.name = name
         if email:
-            self.email = email
+            self.email = (email,)
+        if document:
+            self.document = email
+        if document_type:
+            self.document_type = document_type
+        if type:
+            self.type = type
 
     @abstractmethod
     def mount_obj(content: dict):

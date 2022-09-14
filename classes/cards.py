@@ -16,7 +16,8 @@ class Card(CardSchema):
     ) -> None:
         if id:
             self.id = id
-        self.number = number
+        if number:
+            self.number = number
         self.holder_name = holder_name
         self.exp_month = exp_month
         self.exp_year = exp_year
