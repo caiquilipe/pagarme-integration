@@ -9,7 +9,7 @@ class OrderSchema:
         "properties": {
             "customer_id": {"type": "string"},
             "items": {"type": "array", "items": ItemSchema.validate_insert()},
-            "payments": PaymentSchema.validate_get(),
+            "payments": {"type": "array", "items": PaymentSchema.validate_get()},
         },
         "required": ["customer_id", "items", "payments"],
     }

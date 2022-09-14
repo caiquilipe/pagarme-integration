@@ -9,6 +9,11 @@ def handle_error_pagarme(content: dict) -> dict:
     return content
 
 
+def handle_error_insert_orders(content: dict) -> None:
+    if content.get("errors"):
+        raise ValidationError(message=sum(content.get("errors").values(), [])[0])
+
+
 def handle_error_serializer(errors: dict) -> dict:
     print(errors)
     return {

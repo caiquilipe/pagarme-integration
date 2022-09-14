@@ -1,4 +1,7 @@
-from pagarme_integration.utils.handle_errors import handle_error_pagarme
+from pagarme_integration.utils.handle_errors import (
+    handle_error_pagarme,
+    handle_error_insert_orders,
+)
 from pagarme_integration.schemas.orders import OrderSchema
 from pagarme_integration.classes.config import Config
 
@@ -11,9 +14,10 @@ import json
 
 
 class Order(OrderSchema):
-    def __init__(self, id, customer_id, items, charges, payments) -> None:
+    def __init__(self, id, status, customer_id, items, charges, payments) -> None:
         if id:
             self.id = id
+        self.status = status
         if customer_id:
             self.customer_id = customer_id
         self.items = items
@@ -26,7 +30,7 @@ class Order(OrderSchema):
     def mount_obj(content: dict):
         return Order(
             id=content.get("id"),
-            customer_id=content.get("customer_id"),
+            customer_id=content.get("customer").get("id"),
             items=content.get("items"),
             payments=content.get("payments"),
             charges=content.get("charges"),
@@ -80,5 +84,10 @@ class Order(OrderSchema):
             ).text
         )
         content_validated = handle_error_pagarme(content)
+        handle_error_insert_orders(
+            content=content_validated.get("charges")
+            .get("last_transaction")
+            .get("gateway_response")
+        )
         validate(instance=content_validated, schema=cls.validate_get())
         return Order.mount_obj(content_validated)

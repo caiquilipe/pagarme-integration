@@ -38,9 +38,9 @@ class CardSchema:
             "capture": {"type": "boolean"},
             "statement_descriptor": {"type": "string"},
             "card_id": {"type": "string"},
-            "cvv": __cvv,
+            "card": __cvv,
         },
-        "required": ["capture", "statement_descriptor", "card_id", "cvv"],
+        "required": ["capture", "statement_descriptor", "card_id", "card"],
     }
 
     @classmethod
