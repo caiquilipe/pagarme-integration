@@ -1,5 +1,5 @@
-from pagarme_integration.schemas.transactions import TransactionSchema
-from pagarme_integration.schemas.customers import CustomerSchema
+from ..schemas.transactions import TransactionSchema
+from ..schemas.customers import CustomerSchema
 
 
 class ChargeSchema:

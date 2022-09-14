@@ -1,6 +1,6 @@
-from pagarme_integration.utils.handle_errors import handle_error_pagarme
-from pagarme_integration.schemas.orders import OrderSchema
-from pagarme_integration.classes.config import Config
+from ..utils.handle_errors import handle_error_pagarme
+from ..schemas.orders import OrderSchema
+from ..classes.config import Config
 
 from jsonschema import validate
 
@@ -33,9 +33,12 @@ class Order(OrderSchema):
         ).__dict__
 
     @classmethod
-    def get_orders(cls):
+    def get_orders(cls, customer_id):
         response = []
-        url = Config.get_url() + "/orders"
+        if customer_id:
+            url = Config.get_url() + f"/orders?customer_id={customer_id}"
+        else:
+            url = Config.get_url() + "/orders"
         content = json.loads(
             requests.get(
                 url,

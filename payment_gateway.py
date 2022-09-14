@@ -1,10 +1,10 @@
-from pagarme_integration.classes.customers import Customer
-from pagarme_integration.classes.config import Config
-from pagarme_integration.classes.orders import Order
-from pagarme_integration.classes.cards import Card
-
 from jsonschema.exceptions import ValidationError, SchemaError
 from jsonschema import validate
+
+from .classes.customers import Customer
+from .classes.config import Config
+from .classes.orders import Order
+from .classes.cards import Card
 
 
 class PaymentGatewayClass:
@@ -41,15 +41,15 @@ class PaymentGatewayClass:
         except ValidationError as ve:
             raise ve
 
-    def get_orders(self):
-        return Order.get_orders()
+    def get_orders(self, customer_id):
+        return Order.get_orders(customer_id=customer_id)
 
     def get_order(self, pk):
         return Order.get_order(pk=pk)
 
     def insert_order(self, payload):
         try:
-            validate(instance=payload, schema=Order.insert_order())
+            validate(instance=payload, schema=Order.validate_insert())
             return Order.insert_order(payload=Order.mount_obj(content=payload))
         except ValidationError as ve:
             raise ve

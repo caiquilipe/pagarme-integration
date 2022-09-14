@@ -1,6 +1,6 @@
-from pagarme_integration.schemas.payments import PaymentSchema
-from pagarme_integration.schemas.charges import ChargeSchema
-from pagarme_integration.schemas.items import ItemSchema
+from ..schemas.payments import PaymentSchema
+from ..schemas.charges import ChargeSchema
+from ..schemas.items import ItemSchema
 
 
 class OrderSchema:
@@ -8,7 +8,7 @@ class OrderSchema:
         "type": "object",
         "properties": {
             "customer_id": {"type": "string"},
-            "items": {"type": "array", "items": ItemSchema.validate_get()},
+            "items": {"type": "array", "items": ItemSchema.validate_insert()},
             "payments": PaymentSchema.validate_get(),
         },
         "required": ["customer_id", "items", "payments"],

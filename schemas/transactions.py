@@ -1,5 +1,5 @@
-from pagarme_integration.schemas.gateway_responses import GatewayResponseSchema
-from pagarme_integration.schemas.cards import CardSchema
+from ..schemas.gateway_responses import GatewayResponseSchema
+from ..schemas.cards import CardSchema
 
 
 class TransactionSchema:
