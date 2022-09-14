@@ -19,7 +19,7 @@ class OrderSchema:
         "properties": {
             "id": {"type": "string"},
             "items": {"type": "array", "items": ItemSchema.validate_get()},
-            "charges": ChargeSchema.validate_get(),
+            "charges": {"type": "array", "items": ChargeSchema.validate_get()},
         },
         "required": ["id", "items", "charges"],
     }

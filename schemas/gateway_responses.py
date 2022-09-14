@@ -6,7 +6,7 @@ class GatewayResponseSchema:
         "type": "object",
         "properties": {
             "code": {"type": "string"},
-            "errors": ErrorSchema.validate_get(),
+            "errors": {"type": "array", "items": ErrorSchema.validate_get()},
         },
         "required": ["code", "errors"],
     }

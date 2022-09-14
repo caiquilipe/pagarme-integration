@@ -17,7 +17,8 @@ class Order(OrderSchema):
     def __init__(self, id, status, customer_id, items, charges, payments) -> None:
         if id:
             self.id = id
-        self.status = status
+        if status:
+            self.status = status
         if customer_id:
             self.customer_id = customer_id
         self.items = items
