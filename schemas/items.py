@@ -18,7 +18,7 @@ class ItemSchema:
             "quantity": {"type": "number"},
             "code": {"type": "string"},
         },
-        "required": ["amount", "description", "quantity"],
+        "required": ["amount", "description", "quantity", "code"],
     }
 
     @classmethod

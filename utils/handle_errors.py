@@ -11,7 +11,7 @@ def handle_error_pagarme(content: dict) -> dict:
 
 def handle_error_insert_orders(content: dict) -> None:
     if content.get("errors"):
-        raise ValidationError(message=sum(content.get("errors").values(), [])[0])
+        raise ValidationError(message=content.get("errors")[0].get("message"))
 
 
 def handle_error_serializer(errors: dict) -> dict:

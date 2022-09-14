@@ -1,8 +1,14 @@
 class CustomerSchema:
     __insert = {
         "type": "object",
-        "properties": {"name": {"type": "string"}, "email": {"type": "string"}},
-        "required": ["name"],
+        "properties": {
+            "name": {"type": "string"},
+            "email": {"type": "string"},
+            "document": {"type": "string"},
+            "document_type": {"type": "string"},
+            "type": {"type": "string"},
+        },
+        "required": ["name", "email", "document", "type"],
     }
 
     __get = {
@@ -11,6 +17,9 @@ class CustomerSchema:
             "id": {"type": "string"},
             "name": {"type": "string"},
             "email": {"type": "string"},
+            "document": {"type": "string"},
+            "document_type": {"type": "string"},
+            "type": {"type": "string"},
         },
         "required": ["id", "name"],
     }

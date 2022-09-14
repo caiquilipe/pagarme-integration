@@ -1,3 +1,6 @@
+from pagarme_integration.schemas.address import BillingAddressSchema
+
+
 class CardSchema:
     __insert = {
         "type": "object",
@@ -7,8 +10,16 @@ class CardSchema:
             "exp_month": {"type": "number"},
             "exp_year": {"type": "number"},
             "cvv": {"type": "string"},
+            "billing_address": BillingAddressSchema.validate_insert(),
         },
-        "required": ["number", "holder_name", "exp_month", "exp_year", "cvv"],
+        "required": [
+            "number",
+            "holder_name",
+            "exp_month",
+            "exp_year",
+            "cvv",
+            "billing_address",
+        ],
     }
 
     __get = {

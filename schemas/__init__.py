@@ -1,5 +1,6 @@
 from .gateway_responses import GatewayResponseSchema
 from .transactions import TransactionSchema
+from .address import BillingAddressSchema
 from .customers import CustomerSchema
 from .payments import PaymentSchema
 from .charges import ChargeSchema

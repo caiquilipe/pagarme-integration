@@ -28,9 +28,14 @@ class Order(OrderSchema):
 
     @abstractmethod
     def mount_obj(content: dict):
+        if content.get("customer_id"):
+            customer_id = content.get("customer_id")
+        else:
+            customer_id = content.get("customer").get("id")
         return Order(
             id=content.get("id"),
-            customer_id=content.get("customer").get("id"),
+            status=content.get("status"),
+            customer_id=customer_id,
             items=content.get("items"),
             payments=content.get("payments"),
             charges=content.get("charges"),
@@ -85,7 +90,7 @@ class Order(OrderSchema):
         )
         content_validated = handle_error_pagarme(content)
         handle_error_insert_orders(
-            content=content_validated.get("charges")
+            content=content_validated.get("charges")[0]
             .get("last_transaction")
             .get("gateway_response")
         )
