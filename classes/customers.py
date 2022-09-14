@@ -16,7 +16,7 @@ class Customer(CustomerSchema):
             self.id = id
         self.name = name
         if email:
-            self.email = (email,)
+            self.email = email
         if document:
             self.document = email
         if document_type:
