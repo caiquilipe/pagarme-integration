@@ -41,7 +41,7 @@ class PaymentGatewayClass:
         except ValidationError as ve:
             raise ve
 
-    def get_orders(self, customer_id):
+    def get_orders(self, customer_id=None):
         return Order.get_orders(customer_id=customer_id)
 
     def get_order(self, pk):
