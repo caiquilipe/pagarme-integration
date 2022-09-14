@@ -12,7 +12,15 @@ import json
 
 class Card(CardSchema):
     def __init__(
-        self, id, number, holder_name, exp_month, exp_year, last_four_digits, cvv
+        self,
+        id,
+        number,
+        holder_name,
+        exp_month,
+        exp_year,
+        last_four_digits,
+        cvv,
+        billing_address,
     ) -> None:
         if id:
             self.id = id
@@ -25,6 +33,8 @@ class Card(CardSchema):
             self.last_four_digits = last_four_digits
         if cvv:
             self.cvv = cvv
+        if billing_address:
+            self.billing_address = billing_address
 
     @abstractmethod
     def mount_obj(content: dict):
@@ -36,6 +46,7 @@ class Card(CardSchema):
             exp_year=content.get("exp_year"),
             last_four_digits=content.get("last_four_digits"),
             cvv=content.get("cvv"),
+            billing_address=content.get("billing_address"),
         ).__dict__
 
     @classmethod
