@@ -1,3 +1,6 @@
+from pagarme_integration.schemas.phone import PhoneSchema
+
+
 class CustomerSchema:
     __insert = {
         "type": "object",
@@ -7,8 +10,9 @@ class CustomerSchema:
             "document": {"type": "string"},
             "document_type": {"type": "string"},
             "type": {"type": "string"},
+            "phones": PhoneSchema.validate_insert(),
         },
-        "required": ["name", "email", "document", "type"],
+        "required": ["name", "email", "document", "type", "phones"],
     }
 
     __get = {

@@ -11,7 +11,7 @@ import json
 
 
 class Customer(CustomerSchema):
-    def __init__(self, id, name, email, document, document_type, type) -> None:
+    def __init__(self, id, name, email, document, document_type, type, phones) -> None:
         if id:
             self.id = id
         self.name = name
@@ -23,6 +23,8 @@ class Customer(CustomerSchema):
             self.document_type = document_type
         if type:
             self.type = type
+        if phones:
+            self.phones = phones
 
     @abstractmethod
     def mount_obj(content: dict):
@@ -33,6 +35,7 @@ class Customer(CustomerSchema):
             document=content.get("document"),
             document_type=content.get("document_type"),
             type=content.get("type"),
+            phones=content.get("phones"),
         ).__dict__
 
     @classmethod
