@@ -27,7 +27,12 @@ class Customer(CustomerSchema):
     @abstractmethod
     def mount_obj(content: dict):
         return Customer(
-            id=content.get("id"), name=content.get("name"), email=content.get("email")
+            id=content.get("id"),
+            name=content.get("name"),
+            email=content.get("email"),
+            document=content.get("document"),
+            document_type=content.get("document_type"),
+            type=content.get("type"),
         ).__dict__
 
     @classmethod
