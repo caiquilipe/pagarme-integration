@@ -95,5 +95,4 @@ class Order(OrderSchema):
             .get("last_transaction")
             .get("gateway_response")
         )
-        validate(instance=content_validated, schema=cls.validate_get())
         return Order.mount_obj(content_validated)

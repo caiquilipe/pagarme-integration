@@ -15,7 +15,6 @@ def handle_error_insert_orders(content: dict) -> None:
 
 
 def handle_error_serializer(errors: dict) -> dict:
-    print(errors)
     return {
         "detail": [
             f"{keys}:{str(v)}" for keys, values in errors.items() for v in values
