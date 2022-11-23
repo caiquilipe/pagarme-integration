@@ -112,7 +112,7 @@ class Order(OrderSchema):
     def cancel_order(cls,order_id):
         order = cls.get_order(order_id)
         cancelled_charges = []
-        for charge in order.charges:
+        for charge in order.get("charges"):
             if charge.get("status") == "paid" or charge.get("status") == "pending":
                 cls.cancel_charge(charge.get("id"))
                 cancelled_charges.append(charge.get("id"))
