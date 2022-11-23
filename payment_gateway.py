@@ -116,3 +116,9 @@ class PaymentGatewayClass:
             return Order.insert_order(payload=Order.mount_obj(content=payload))
         except ValidationError as ve:
             raise ve
+
+    def cancel_order(self,order_id):
+        try:
+            return Order.cancel_order(order_id = order_id)
+        except ValidationError as ve:
+            raise ve

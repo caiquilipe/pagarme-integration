@@ -96,3 +96,26 @@ class Order(OrderSchema):
             .get("gateway_response")
         )
         return Order.mount_obj(content_validated)
+
+    @classmethod
+    def cancel_charge(cls,charge_id):
+        url = Config.get_url() + f"/charges/{charge_id}"
+        header = Config.get_header()
+        response = requests.delete(
+                    url,
+                    auth=Config.get_auth(),
+                    headers=header
+                )
+        handle_error_pagarme(response.json)
+
+    @classmethod
+    def cancel_order(cls,order_id):
+        order = cls.get_order(order_id)
+        cancelled_charges = []
+        for charge in order.charges:
+            if charge.get("status") == "paid" or charge.get("status") == "pending":
+                cls.cancel_charge(charge.get("id"))
+                cancelled_charges.append(charge.get("id"))
+        return cancelled_charges
+
+            
