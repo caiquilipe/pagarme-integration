@@ -106,7 +106,7 @@ class Order(OrderSchema):
                     auth=Config.get_auth(),
                     headers=header
                 )
-        handle_error_pagarme(response.json)
+        handle_error_pagarme(response.json())
 
     @classmethod
     def cancel_order(cls,order_id):
