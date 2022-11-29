@@ -74,8 +74,8 @@ class PaymentGatewayClass:
     def get_balance(self, recipient_id):
         return Balance.get_balance(recipient_id=recipient_id)
 
-    # def get_customers(self):
-    #    return Customer.get_customers()
+    def get_customers(self):
+        return Customer.get_customers()
 
     def get_customer(self, customer_id):
         return Customer.get_customer(pk=customer_id)
@@ -117,8 +117,8 @@ class PaymentGatewayClass:
         except ValidationError as ve:
             raise ve
 
-    def cancel_order(self,order_id):
+    def cancel_order(self, order_id):
         try:
-            return Order.cancel_order(order_id = order_id)
+            return Order.cancel_order(order_id=order_id)
         except ValidationError as ve:
             raise ve

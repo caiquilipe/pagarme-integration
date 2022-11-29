@@ -48,10 +48,9 @@ class CardSchema:
         "properties": {
             "capture": {"type": "boolean"},
             "statement_descriptor": {"type": "string"},
-            "card_id": {"type": "string"},
-            "card": __cvv,
+            "card": __insert,
         },
-        "required": ["capture", "statement_descriptor", "card_id", "card"],
+        "required": ["capture", "statement_descriptor", "card"],
     }
 
     @classmethod
