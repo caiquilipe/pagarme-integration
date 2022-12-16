@@ -14,13 +14,13 @@ import json
 
 
 class Order(OrderSchema):
-    def __init__(self, id, status, customer_id, items, charges, payments) -> None:
+    def __init__(self, id, status, customer, items, charges, payments) -> None:
         if id:
             self.id = id
         if status:
             self.status = status
-        if customer_id:
-            self.customer_id = customer_id
+        if customer:
+            self.customer = customer
         self.items = items
         if payments:
             self.payments = payments
@@ -29,14 +29,10 @@ class Order(OrderSchema):
 
     @abstractmethod
     def mount_obj(content: dict):
-        if content.get("customer_id"):
-            customer_id = content.get("customer_id")
-        else:
-            customer_id = content.get("customer").get("id")
         return Order(
             id=content.get("id"),
             status=content.get("status"),
-            customer_id=customer_id,
+            customer=content.get("customer"),
             items=content.get("items"),
             payments=content.get("payments"),
             charges=content.get("charges"),
@@ -98,18 +94,14 @@ class Order(OrderSchema):
         return Order.mount_obj(content_validated)
 
     @classmethod
-    def cancel_charge(cls,charge_id):
+    def cancel_charge(cls, charge_id):
         url = Config.get_url() + f"/charges/{charge_id}"
         header = Config.get_header()
-        response = requests.delete(
-                    url,
-                    auth=Config.get_auth(),
-                    headers=header
-                )
+        response = requests.delete(url, auth=Config.get_auth(), headers=header)
         handle_error_pagarme(response.json())
 
     @classmethod
-    def cancel_order(cls,order_id):
+    def cancel_order(cls, order_id):
         order = cls.get_order(order_id)
         cancelled_charges = []
         for charge in order.get("charges"):
@@ -117,5 +109,3 @@ class Order(OrderSchema):
                 cls.cancel_charge(charge.get("id"))
                 cancelled_charges.append(charge.get("id"))
         return cancelled_charges
-
-            

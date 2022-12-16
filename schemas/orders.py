@@ -1,17 +1,18 @@
 from pagarme_integration.schemas.payments import PaymentSchema
 from pagarme_integration.schemas.charges import ChargeSchema
 from pagarme_integration.schemas.items import ItemSchema
+from pagarme_integration.schemas.customers import CustomerSchema
 
 
 class OrderSchema:
     __insert = {
         "type": "object",
         "properties": {
-            "customer_id": {"type": "string"},
+            "customer": CustomerSchema.validate_insert(),
             "items": {"type": "array", "items": ItemSchema.validate_insert()},
             "payments": {"type": "array", "items": PaymentSchema.validate_get()},
         },
-        "required": ["customer_id", "items", "payments"],
+        "required": ["customer", "items", "payments"],
     }
 
     __get = {
