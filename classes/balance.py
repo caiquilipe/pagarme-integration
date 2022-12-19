@@ -47,7 +47,6 @@ class Balance(BalanceSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )

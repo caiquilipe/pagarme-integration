@@ -69,7 +69,6 @@ class BankAccount(DefauktBankAccountSchema):
         content = json.loads(
             requests.patch(
                 url,
-                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text

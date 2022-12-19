@@ -78,7 +78,6 @@ class Recipient(RecipientSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )
@@ -94,7 +93,6 @@ class Recipient(RecipientSchema):
         content = json.loads(
             requests.post(
                 url,
-                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text
@@ -111,7 +109,6 @@ class Recipient(RecipientSchema):
         content = json.loads(
             requests.put(
                 url,
-                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text

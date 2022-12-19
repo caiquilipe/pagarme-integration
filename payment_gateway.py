@@ -12,8 +12,8 @@ from pagarme_integration.classes.withdraw import Withdraw
 
 
 class PaymentGatewayClass:
-    def __init__(self, key) -> None:
-        Config.set_auth(key=key)
+    def __init__(self, headers) -> None:
+        Config.set_auth(headers=headers)
 
     def get_withdrawal(self, recipient_id, withdraw_id):
         return Withdraw.get_withdrawal(

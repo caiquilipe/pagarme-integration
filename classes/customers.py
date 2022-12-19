@@ -45,7 +45,6 @@ class Customer(CustomerSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )
@@ -61,7 +60,6 @@ class Customer(CustomerSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )
@@ -77,7 +75,6 @@ class Customer(CustomerSchema):
         content = json.loads(
             requests.post(
                 url,
-                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text

@@ -48,7 +48,6 @@ class Order(OrderSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )
@@ -64,7 +63,6 @@ class Order(OrderSchema):
         content = json.loads(
             requests.get(
                 url,
-                auth=Config.get_auth(),
                 headers=Config.get_header(),
             ).text
         )
@@ -80,7 +78,6 @@ class Order(OrderSchema):
         content = json.loads(
             requests.post(
                 url,
-                auth=Config.get_auth(),
                 headers=header,
                 json=payload,
             ).text
@@ -97,7 +94,7 @@ class Order(OrderSchema):
     def cancel_charge(cls, charge_id):
         url = Config.get_url() + f"/charges/{charge_id}"
         header = Config.get_header()
-        response = requests.delete(url, auth=Config.get_auth(), headers=header)
+        response = requests.delete(url, headers=header)
         handle_error_pagarme(response.json())
 
     @classmethod
